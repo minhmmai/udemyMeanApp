@@ -1,0 +1,22 @@
+{
+  "name": "udemymeanapp",
+  "version": "1.0.0",
+  "description": "udemy mean app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhmanmai/udemyMeanApp.git"
+  },
+  "keywords": [
+    "mean"
+  ],
+  "author": "Minh Mai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minhmanmai/udemyMeanApp/issues"
+  },
+  "homepage": "https://github.com/minhmanmai/udemyMeanApp#readme"
+}
