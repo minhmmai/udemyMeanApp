@@ -1,3 +1,4 @@
+require('./api/data/db.js');
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -22,3 +23,4 @@ var server = app.listen(app.get('port'), function () {
     var port = server.address().port;
     console.log('Listening to port: ' + port);
 });
+
