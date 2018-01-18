@@ -1,17 +1,77 @@
 var mongoose = require('mongoose');
 var Hotel = mongoose.model('Hotel');
 
+var runGeoQuery = function (req, res) {
+    var lng = parseFloat(req.query.lng);
+    var lat = parseFloat(req.query.lat);
+
+    //A geoJSON point
+    var point = {
+        type: "Point",
+        coordinates: [lng, lat]
+    };
+
+    var geoOptions = {
+        spherical: true,
+        maxDistance: 2000,
+        num: 5
+    };
+
+    Hotel
+        .geoNear(point, geoOptions, function (err, results, stats) {
+            var response = {
+                status: 200,
+                message: results
+            };
+            if (err) {
+                console.log('Error finding coordinates!');
+                response.status = 500;
+                response.message = err;
+            } else {
+                console.log('Geo results', results);
+                console.log('Geo stats', stats);
+            }
+            res
+                .status(response.status)
+                .json(response.message);
+        });
+};
+
 module.exports.hotelsGetAll = function (req, res) {
 
     var offset = 0;
     var count = 5;
+    var maxCount = 10;
+
+    if (req.query && req.query.lng && req.query.lat) {
+        runGeoQuery(req, res);
+        return;
+    };
 
     if (req.query && req.query.offset) {
         offset = parseInt(req.query.offset, 10);
-    }
+    };
 
     if (req.query && req.query.count) {
         count = parseInt(req.query.count, 10);
+    };
+
+    if (isNaN(offset) || isNaN(count)) {
+        res
+            .status(400)
+            .json({
+                'message': 'If supplied in query string, offset & count should be numbers'
+            });
+        return;
+    };
+
+    if (count > maxCount) {
+        res
+            .status(400)
+            .json({
+                "message": "Count limit of " + maxCount + " exceeded"
+            });
+        return;
     }
 
     Hotel
@@ -19,9 +79,16 @@ module.exports.hotelsGetAll = function (req, res) {
         .skip(offset)
         .limit(count)
         .exec(function (err, hotels) {
-            console.log('Found hotels', hotels.length);
-            res
-                .json(hotels);
+            if (err) {
+                console.log('Error finding hotels');
+                res
+                    .status(500)
+                    .json(err);
+            } else {
+                console.log('Found hotels', hotels.length);
+                res
+                    .json(hotels);
+            }
         });
 };
 
@@ -33,9 +100,25 @@ module.exports.hotelsGetOne = function (req, res) {
     Hotel
         .findById(hotelId)
         .exec(function (err, doc) {
+            var response = {
+                status: 200,
+                message: doc
+            };
+            if (err) {
+                console.log('Error finding hotels');
+                response.status = 500;
+                response.message = err;
+            } else if (!doc) {
+                console.log('hotelId not found!')
+                response.status = 404;
+                response.message = {
+                    "message": "Hotel ID not found"
+                };
+            }
             res
-                .status(200)
-                .json(doc);
+                .status(response.status)
+                .json(response.message);
+
         });
 };
 
