@@ -17,7 +17,7 @@ module.exports.reviewsGetAll = function (req, res) {
 
             if (err) {
                 console.log('Error finding hotels!');
-                response.status(400);
+                response.status = 500;
                 response.message = {
                     "message": "Error finding hotels"
                 }
@@ -57,19 +57,19 @@ module.exports.reviewsGetOne = function (req, res) {
     Hotel
         .findById(hotelId)
         .select('reviews')
-        .exec(function (err, hotel) {
+        .exec(function (err, doc) {
             var response = {
                 status: 200,
-                message: hotel
+                message: []
             };
 
             if (err) {
                 console.log('Error finding hotels!');
-                response.status(400);
+                response.status = 500;
                 response.message = {
                     "message": "Error finding hotels"
                 }
-            } else if (!hotel) {
+            } else if (!doc) {
                 console.log('Hotel not found!');
                 response.status = 400;
                 response.message = {
@@ -93,5 +93,56 @@ module.exports.reviewsGetOne = function (req, res) {
             res
                 .status(response.status)
                 .json(response.message);
+        });
+};
+
+var _addReview = function (req, res, hotel) {
+    hotel.reviews.push({
+        name: req.body.name,
+        rating: parrseInt(req.body.rating, 10),
+        review: req.body.review
+    });
+
+    hotel.save(function (err, hotelUpdated) {
+        if (err) {
+            console.log('Error saving hotel');
+            res
+                .status(500)
+                .json(err);
+        } else {
+            console.log(hotelUpdated.reviews[hotel.reviews.length - 1]);
+            res
+                .status(201)
+                .json(hotelUpdated.reviews[hotel.reviews.length - 1]);
+        }
+    });
+
+};
+
+module.exports.reviewsAddOne = function (req, res) {
+    var hotelId = req.params.hotelId
+    console.log('GET hotelId', hotelId);
+
+    Hotel
+        .findById(hotelId)
+        .select('reviews')
+        .exec(function (err, doc) {
+            if (err) {
+                console.log('Error finding hotels!');
+                res.status(500)
+                .json = {
+                    "message": "Error finding hotels"
+                }
+            } else if (!doc) {
+                console.log('Hotel not found!');
+                response.status(404)
+                .json = {
+                    "message": "Hotel not found!"
+                }
+            }
+
+            if (doc) {
+                _addReview(req, res, doc);
+            }
         });
 };
