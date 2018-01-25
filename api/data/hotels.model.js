@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 var reviewSchema = new mongoose.Schema({
     name: {
@@ -56,4 +56,4 @@ var hotelSchema = new mongoose.Schema({
     }
 });
 
-mongoose.model('Hotel', hotelSchema)
+mongoose.model("Hotel", hotelSchema)

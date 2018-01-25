@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Hotel = mongoose.model('Hotel');
+var mongoose = require("mongoose");
+var Hotel = mongoose.model("Hotel");
 
 var runGeoQuery = function (req, res) {
     var lng = parseFloat(req.query.lng);
@@ -24,12 +24,12 @@ var runGeoQuery = function (req, res) {
                 message: results
             };
             if (err) {
-                console.log('Error finding coordinates!');
+                console.log("Error finding coordinates!");
                 response.status = 500;
                 response.message = err;
             } else {
-                console.log('Geo results', results);
-                console.log('Geo stats', stats);
+                console.log("Geo results", results);
+                console.log("Geo stats", stats);
             }
             res
                 .status(response.status)
@@ -80,12 +80,12 @@ module.exports.hotelsGetAll = function (req, res) {
         .limit(count)
         .exec(function (err, hotels) {
             if (err) {
-                console.log('Error finding hotels');
+                console.log("Error finding hotels");
                 res
                     .status(500)
                     .json(err);
             } else {
-                console.log('Found hotels', hotels.length);
+                console.log("Found hotels", hotels.length);
                 res
                     .json(hotels);
             }
@@ -95,7 +95,7 @@ module.exports.hotelsGetAll = function (req, res) {
 module.exports.hotelsGetOne = function (req, res) {
 
     var hotelId = req.params.hotelId;
-    console.log('GET hotelId', hotelId);
+    console.log("GET hotelId", hotelId);
 
     Hotel
         .findById(hotelId)
@@ -105,11 +105,11 @@ module.exports.hotelsGetOne = function (req, res) {
                 message: doc
             };
             if (err) {
-                console.log('Error finding hotels');
+                console.log("Error finding hotels");
                 response.status = 500;
                 response.message = err;
             } else if (!doc) {
-                console.log('hotelId not found!')
+                console.log("hotelId not found!")
                 response.status = 404;
                 response.message = {
                     "message": "Hotel ID not found"
@@ -150,12 +150,12 @@ module.exports.hotelsAddOne = function (req, res) {
             }
         }, function (err, hotel) {
             if (err) {
-                console.log('Error creating hotel');
+                console.log("Error creating hotel");
                 res
                     .status(400)
                     .json(err);
             } else {
-                console.log('Hotel created' + hotel);
+                console.log("Hotel created" + hotel);
                 res
                     .status(201)
                     .json(hotel);
@@ -165,7 +165,7 @@ module.exports.hotelsAddOne = function (req, res) {
 
 module.exports.hotelsUpdateOne = function (req, res) {
     var hotelId = req.params.hotelId;
-    console.log('GET hotelId', hotelId);
+    console.log("GET hotelId", hotelId);
 
     Hotel
         .findById(hotelId)
@@ -176,11 +176,11 @@ module.exports.hotelsUpdateOne = function (req, res) {
                 message: doc
             };
             if (err) {
-                console.log('Error finding hotels');
+                console.log("Error finding hotels");
                 response.status = 500;
                 response.message = err;
             } else if (!doc) {
-                console.log('hotelId not found!')
+                console.log("hotelId not found!")
                 response.status = 404;
                 response.message = {
                     "message": "Hotel ID not found"
@@ -194,8 +194,8 @@ module.exports.hotelsUpdateOne = function (req, res) {
                 doc.name = req.body.name;
                 doc.description = req.body.description;
                 doc.stars = parseInt(req.body.stars, 10);
-                doc.services = req.body.services;
-                doc.photos = req.body.photos;
+                doc.services = _splitArray(req.body.services);
+                doc.photos = _splitArray(req.body.photos);
                 doc.currency = req.body.currency;
                 doc.location = {
                     address: req.body.address,
@@ -206,17 +206,23 @@ module.exports.hotelsUpdateOne = function (req, res) {
                 };
                 doc.save(function (err, updatedHotel) {
                     if (err) {
-                        console.log('Error updating hotel');
                         res
                             .status(500)
                             .json(err);
+                            console.log("Error updating hotel");
                     } else {
                         res
                             .status(204)
                             .json(updatedHotel);
+                            console.log("Hotel updated!");
                     }
                 });
             }
 
         });
 };
+
+module.exports.hotelsDeleteOne = function (req, res) {
+
+};
+

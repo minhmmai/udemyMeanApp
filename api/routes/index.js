@@ -1,27 +1,30 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-var ctrlHotels = require('../controllers/hotels.controller.js');
-var ctrlReviews = require('../controllers/reviews.controller.js');
+var ctrlHotels = require("../controllers/hotels.controller.js");
+var ctrlReviews = require("../controllers/reviews.controller.js");
 
 router
-    .route('/hotels')
+    .route("/hotels")
     .get(ctrlHotels.hotelsGetAll)
     .post(ctrlHotels.hotelsAddOne);
 
 router
-    .route('/hotels/:hotelId')
+    .route("/hotels/:hotelId")
     .get(ctrlHotels.hotelsGetOne)
-    .put(ctrlHotels.hotelsUpdateOne);
+    .put(ctrlHotels.hotelsUpdateOne)
+    .delete(ctrlHotels.hotelsDeleteOne);
 
 //Reviews routes
 router
-    .route('/hotels/:hotelId/reviews')
+    .route("/hotels/:hotelId/reviews")
     .get(ctrlReviews.reviewsGetAll)
     .post(ctrlReviews.reviewsAddOne);
 
 router
-    .route('/hotels/:hotelId/reviews/:reviewId')
-    .get(ctrlReviews.reviewsGetOne);
+    .route("/hotels/:hotelId/reviews/:reviewId")
+    .get(ctrlReviews.reviewsGetOne)
+    .put(ctrlReviews.reviewsUpdateOne)
+    .delete(ctrlReviews.reviewsDeleteOne);
 
 module.exports = router;
