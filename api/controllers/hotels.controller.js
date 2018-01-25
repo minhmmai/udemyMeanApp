@@ -40,8 +40,8 @@ var runGeoQuery = function (req, res) {
 module.exports.hotelsGetAll = function (req, res) {
 
     var offset = 0;
-    var count = 5;
-    var maxCount = 10;
+    var count = 15;
+    var maxCount = 50;
 
     if (req.query && req.query.lng && req.query.lat) {
         runGeoQuery(req, res);
@@ -204,16 +204,16 @@ module.exports.hotelsUpdateOne = function (req, res) {
                         parseFloat(req.body.lat)
                     ]
                 };
-                doc.save(function(err, updatedHotel){
-                    if(err){
+                doc.save(function (err, updatedHotel) {
+                    if (err) {
                         console.log('Error updating hotel');
                         res
-                        .status(500)
-                        .json(err);
-                    }else {
+                            .status(500)
+                            .json(err);
+                    } else {
                         res
-                        .status(204)
-                        .json(updatedHotel);
+                            .status(204)
+                            .json(updatedHotel);
                     }
                 });
             }
