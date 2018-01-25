@@ -77,7 +77,7 @@ module.exports.reviewsGetOne = function (req, res) {
                 }
             } else {
                 console.log('Return hotel ' + hotelId);
-                var review = hotel.reviews.id(reviewId);
+                var review = doc.reviews.id(reviewId);
                 if (review) {
                     console.log('Return review ' + review);
                     response.status = 200;
