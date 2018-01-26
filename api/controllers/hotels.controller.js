@@ -28,8 +28,8 @@ var runGeoQuery = function (req, res) {
                 response.status = 500;
                 response.message = err;
             } else {
-                console.log("Geo results", results);
-                console.log("Geo stats", stats);
+                console.log("Geo results ", results);
+                console.log("Geo stats ", stats);
             }
             res
                 .status(response.status)
@@ -60,7 +60,7 @@ module.exports.hotelsGetAll = function (req, res) {
         res
             .status(400)
             .json({
-                'message': 'If supplied in query string, offset & count should be numbers'
+                "message": "If supplied in query string, offset & count should be numbers"
             });
         return;
     };
@@ -80,12 +80,12 @@ module.exports.hotelsGetAll = function (req, res) {
         .limit(count)
         .exec(function (err, hotels) {
             if (err) {
-                console.log("Error finding hotels");
+                console.log("Error finding hotels!");
                 res
                     .status(500)
                     .json(err);
             } else {
-                console.log("Found hotels", hotels.length);
+                console.log("Found hotels ", hotels.length);
                 res
                     .json(hotels);
             }
@@ -95,7 +95,7 @@ module.exports.hotelsGetAll = function (req, res) {
 module.exports.hotelsGetOne = function (req, res) {
 
     var hotelId = req.params.hotelId;
-    console.log("GET hotelId", hotelId);
+    console.log("GET hotelId ", hotelId);
 
     Hotel
         .findById(hotelId)
@@ -105,14 +105,14 @@ module.exports.hotelsGetOne = function (req, res) {
                 message: doc
             };
             if (err) {
-                console.log("Error finding hotels");
+                console.log("Error finding hotelId");
                 response.status = 500;
                 response.message = err;
             } else if (!doc) {
                 console.log("hotelId not found!")
                 response.status = 404;
                 response.message = {
-                    "message": "Hotel ID not found"
+                    "message": "Hotel not found!"
                 };
             }
             res
@@ -209,12 +209,12 @@ module.exports.hotelsUpdateOne = function (req, res) {
                         res
                             .status(500)
                             .json(err);
-                            console.log("Error updating hotel");
+                        console.log("Error updating hotel");
                     } else {
                         res
                             .status(204)
                             .json(updatedHotel);
-                            console.log("Hotel updated!");
+                        console.log("Hotel updated!");
                     }
                 });
             }
@@ -223,6 +223,22 @@ module.exports.hotelsUpdateOne = function (req, res) {
 };
 
 module.exports.hotelsDeleteOne = function (req, res) {
-
+    var hotelId = req.params.hotelId;
+    Hotel
+        .findByIdAndRemove(hotelId)
+        .exec(function (err, hotel) {
+            if (err) {
+                res
+                    .status(404)
+                    .json(err);
+            } else {
+                console.log("hotelId " + hotelId + " deleted!");
+                res
+                    .status(204)
+                    .json = {
+                        "message": "Hotel deleted!"                    
+                    };
+            }
+        });
 };
 
