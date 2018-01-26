@@ -64,13 +64,13 @@ module.exports.reviewsGetOne = function (req, res) {
             };
 
             if (err) {
-                console.log("Error finding hotels!");
+                console.log("Error finding hotelId!");
                 response.status = 500;
                 response.message = {
-                    "message": "Error finding hotels"
+                    "message": "Error finding hotel"
                 }
             } else if (!doc) {
-                console.log("Hotel not found!");
+                console.log("hotelId not found!");
                 response.status = 400;
                 response.message = {
                     "message": "Hotel not found!"
@@ -83,7 +83,7 @@ module.exports.reviewsGetOne = function (req, res) {
                     response.status = 200;
                     response.message = review
                 } else {
-                    console.log("Review not found!");
+                    console.log("reviewId not found!");
                     response.status = 200;
                     response.message = {
                         "message": "Review not found!"
@@ -154,14 +154,14 @@ module.exports.reviewsUpdateOne = function (req, res) {
     Hotel
         .findById(hotelId)
         .select("reviews")
-        .exec(function (err, doc) {
+        .exec(function (err, hotel) {
             if (err) {
                 console.log("Error finding hotels!");
                 res.status(500)
                     .json = {
                         "message": "Error finding hotels"
                     }
-            } else if (!doc) {
+            } else if (!hotel) {
                 console.log("Hotel not found!");
                 res.status(404)
                     .json = {
@@ -169,13 +169,13 @@ module.exports.reviewsUpdateOne = function (req, res) {
                     }
             } else {
                 console.log("Return hotelId " + hotelId);
-                var review = doc.reviews.id(reviewId);
+                var review = hotel.reviews.id(reviewId);
                 if (review) {
                     console.log("Return reviewId " + reviewId);
                     review.name = req.body.name;
-                    review.rating = req.body.rating;
+                    review.rating = parseInt(req.body.rating);
                     review.review = req.body.review;
-                    doc.save(function (err, updatedReview) {
+                    hotel.save(function (err, updatedReview) {
                         if (err) {
                             console.log("Error updating review");
                             res
@@ -184,12 +184,11 @@ module.exports.reviewsUpdateOne = function (req, res) {
                         } else {
                             res
                                 .status(204)
-                                .json(updatedReview);                                   
-                                console.log(review);                             
+                                .json(updatedReview);
                             console.log("Review updated");
                         }
                     });
-                }else {
+                } else {
                     console.log("Error finding reviewId!")
                 }
             };
@@ -197,5 +196,52 @@ module.exports.reviewsUpdateOne = function (req, res) {
 };
 
 module.exports.reviewsDeleteOne = function (req, res) {
+    var hotelId = req.params.hotelId;
+    var reviewId = req.params.reviewId;
 
+    Hotel
+        .findById(hotelId)
+        .select("reviews")
+        .exec(function (err, hotel) {
+            if (err) {
+                console.log("Error finding hotels!");
+                res.status(500)
+                    .json = {
+                        "message": "Error finding hotels"
+                    }
+            } else if (!hotel) {
+                console.log("Hotel not found!");
+                res.status(404)
+                    .json = {
+                        "message": "Hotel not found!"
+                    }
+            } else {
+                console.log("Return hotelId " + hotelId);
+                var review = hotel.reviews.id(reviewId);
+                if (review) {
+                    console.log("Return reviewId " + reviewId);
+                    hotel.reviews.id(reviewId).remove();
+                    hotel.save(function (err, deletedReview) {
+                        if (err) {
+                            console.log("Error deleting review");
+                            res
+                                .status(500)
+                                .json(err);
+                        } else {
+                            res
+                                .status(204)
+                                .json(deletedReview);
+                            console.log("Review deleted");
+                        }
+                    });
+                } else {
+                    res
+                        .status(404)
+                        .json = {
+                            "message": "Review not found!"
+                        }
+                    console.log("Error finding reviewId!")
+                }
+            };
+        });
 };
