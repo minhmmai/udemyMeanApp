@@ -8,8 +8,7 @@ function MainController(FilmFactory) {
     vm.date2 = "01 August 2018";
 
     FilmFactory.getAllFilms().then(function(response) {
-        console.log(response);
-        
+        console.log(response);        
         return vm.films = response;
     })
 }
