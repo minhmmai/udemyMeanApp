@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<hmtl>
+<hmtl ng-app="meanhotel">
 
     <head>
         <title>MEAN app</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" />
         <link href="css/custom.css" rel="stylesheet" />
+        <script src="jquery/jquery-3.2.1.min.js"></script>
+        <script src="node_modules/angular/angular.js"></script>
+        <script src="node_modules/angular-route/angular-route.js"></script>
+        <script src="angular-app/app.js"></script>
     </head>
 
     <body>
-        <h1>MEAN hotel homepage</h1>
+        <div ng-view>
+
+        </div>
 
         <footer class="footer">
             <div class="container">
@@ -20,8 +26,6 @@
                     <small>&copy; udemy MEAN app</small>
                 </p>
             </div>
-        </footer>
-
-        <script src="jquery/jquery-3.2.1.min.js"></script>
+        </footer>        
     </body>
 </hmtl>
