@@ -9,6 +9,7 @@ function MainController(FilmFactory) {
 
     FilmFactory.getAllFilms().then(function(response) {
         console.log(response);
+        
         return vm.films = response;
     })
 }
