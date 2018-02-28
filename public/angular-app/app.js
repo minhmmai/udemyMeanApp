@@ -1,17 +1,13 @@
 angular.module("meanhotel", ["ngRoute"])
-    .config(config)
-    .controller("HotelController", HotelController);
+    .config(config);
 
 function config($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'angular-app/hotels.html',
+            templateUrl: 'angular-app/hotel-list/hotels.html',
             controller: HotelController,
             controllerAs: 'vm'
         });
 }
 
-function HotelController() {
-    var vm = this;
-    vm.title = "MEAN Hotel App";
-}
+
