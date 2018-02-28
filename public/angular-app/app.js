@@ -7,6 +7,11 @@ function config($routeProvider) {
             templateUrl: 'angular-app/hotel-list/hotels.html',
             controller: HotelController,
             controllerAs: 'vm'
+        })
+        .when('/hotel/:id', {
+            templateUrl: 'angular-app/hotel-display/hotel.html',
+            controller: HotelController,
+            controllerAs: 'vm'
         });
 }
 

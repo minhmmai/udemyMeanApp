@@ -6,7 +6,6 @@ angular.module("meanhotel")
     vm.title = "MEAN Hotel App";
     $http.get("/api/hotels")
     .then(function(response){
-        console.log(response);
         vm.hotels = response.data;
     })
 }
