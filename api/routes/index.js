@@ -10,7 +10,7 @@ router
     .post(ctrlHotels.hotelsAddOne);
 
 router
-    .route("/hotel/:hotelId")
+    .route("/hotels/:hotelId")
     .get(ctrlHotels.hotelsGetOne)
     .put(ctrlHotels.hotelsUpdateOne)
     .delete(ctrlHotels.hotelsDeleteOne);
@@ -22,7 +22,7 @@ router
     .post(ctrlReviews.reviewsAddOne);
 
 router
-    .route("/hotel/:hotelId/reviews/:reviewId")
+    .route("/hotels/:hotelId/reviews/:reviewId")
     .get(ctrlReviews.reviewsGetOne)
     .put(ctrlReviews.reviewsUpdateOne)
     .delete(ctrlReviews.reviewsDeleteOne);
