@@ -19,7 +19,7 @@ var reviewSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-});
+}, {usePushEach: true});
 
 var roomSchema = new mongoose.Schema({
     type: String,
@@ -27,7 +27,7 @@ var roomSchema = new mongoose.Schema({
     description: String,
     photos: [String],
     price: Number    
-});
+}, {usePushEach: true});
 
 var hotelSchema = new mongoose.Schema({
     name: {
@@ -54,6 +54,6 @@ var hotelSchema = new mongoose.Schema({
             index: '2dsphere'
         }        
     }
-});
+}, {usePushEach: true});
 
 mongoose.model("Hotel", hotelSchema)
