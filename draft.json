@@ -1,52 +1,47 @@
 {
-    "_id": ObjectId("5a64699e8b656c6018d2beec"),
-    "name": " Nice hotel",
-    "description": "This is a really nice hotel by the beach",
-    "currency": "£",
-    "location": {
-        "address": "1 London, London",
-        "coordinates": [
-            -0.1413745,
-            51.5108613
-        ]
-    },
-    "rooms": [],
-    "reviews": [
-        {
-            "name": "Simon ",
-            "rating": 5,
-            "review": "This is a great place!",
-            "_id": ObjectId("5a647241a4109d500e8eea97"),
-            "createdOn": ISODate("2018-01-21T10:58:09.066Z")
+    "errors": {
+        "reviews.2.rating": {
+            "message": "Cast to Number failed for value \"NaN\" at path \"rating\"",
+            "name": "CastError",
+            "stringValue": "\"NaN\"",
+            "kind": "Number",
+            "value": null,
+            "path": "rating",
+            "reason": {
+                "message": "Cast to number failed for value \"NaN\" at path \"rating\"",
+                "name": "CastError",
+                "stringValue": "\"NaN\"",
+                "kind": "number",
+                "value": null,
+                "path": "rating"
+            }
         },
-        {
-            "name": "Simon ",
-            "rating": 5,
-            "review": "This is a great place!",
-            "_id": ObjectId("5a64725aac70e94419b61bae"),
-            "createdOn":
-    ISODate("2018-01-21T10:58:34.363Z")
+        "reviews.2.review": {
+            "message": "Path `review` is required.",
+            "name": "ValidatorError",
+            "properties": {
+                "type": "required",
+                "message": "Path `{PATH}` is required.",
+                "path": "review"
+            },
+            "kind": "required",
+            "path": "review",
+            "$isValidatorError": true
         },
-        {
-            "name": "Simon ",
-            "rating": 5,
-            "review": "This is a great place!",
-            "_id": ObjectId("5a64730483dfa1dc109d578c"),
-            "createdOn": ISODate("2018-01-21T11:01:24.535Z")
-        },
-        {
-            "name": "Peter",
-            "rating": 4,
-            "review": "This is a good hotel!",
-            "_id": ObjectId("5a64735e43f03c380b279db0"),
-            "createdOn": ISODate("2018-01-21T11:02:54.227Z")
+        "reviews.2.name": {
+            "message": "Path `name` is required.",
+            "name": "ValidatorError",
+            "properties": {
+                "type": "required",
+                "message": "Path `{PATH}` is required.",
+                "path": "name"
+            },
+            "kind": "required",
+            "path": "name",
+            "$isValidatorError": true
         }
-    ],
-    "photos": [],
-    "services": [
-        "Wifi",
-        "Pool"
-    ],
-    "stars": 5,
-    "__v": 0
+    },
+    "_message": "Hotel validation failed",
+    "message": "Hotel validation failed: reviews.2.rating: Cast to Number failed for value \"NaN\" at path \"rating\", reviews.2.review: Path `review` is required., reviews.2.name: Path `name` is required.",
+    "name": "ValidationError"
 }
