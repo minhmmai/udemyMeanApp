@@ -105,7 +105,7 @@ var _addReview = function (req, res, hotel) {
 
     hotel.save(function (err, hotelUpdated) {
         if (err) {
-            console.log("Error saving hotel!");
+            console.log("Error saving hotel");
             res
                 .status(500)
                 .json(err);
@@ -209,7 +209,7 @@ module.exports.reviewsDeleteOne = function (req, res) {
     Hotel
         .findById(hotelId)
         .select("reviews")
-        .exec(function (err, hotel) {
+        .exec(function (err, hotel) {            
             if (err) {
                 console.log("Error finding hotels!");
                 res.status(500)

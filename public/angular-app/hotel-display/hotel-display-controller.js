@@ -21,13 +21,14 @@ function HotelController(hotelDataFactory, $routeParams) {
         };
         if (vm.reviewForm.$valid) {
             hotelDataFactory.postReview(id, postData).then(function (response) {
-                console.log(postData);
+                if (response.status == 201) {
+                    $route.reload();
+                }
             }).catch(function (error) {
                 console.log(error);
             });
-        }
-        else {
+        } else {
             vm.isSubmitted = true;
         }
-    }
+    };
 };

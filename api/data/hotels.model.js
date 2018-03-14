@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+mongoose.plugin(schema => { schema.options.usePushEach = true });
 
 var reviewSchema = new mongoose.Schema({
     name: {
@@ -19,15 +20,15 @@ var reviewSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-}, {usePushEach: true});
+});
 
 var roomSchema = new mongoose.Schema({
     type: String,
     number: Number,
     description: String,
     photos: [String],
-    price: Number    
-}, {usePushEach: true});
+    price: Number
+});
 
 var hotelSchema = new mongoose.Schema({
     name: {
@@ -52,8 +53,8 @@ var hotelSchema = new mongoose.Schema({
         coordinates: {
             type: [Number],
             index: '2dsphere'
-        }        
+        }
     }
-}, {usePushEach: true});
+});
 
 mongoose.model("Hotel", hotelSchema)
