@@ -25,7 +25,12 @@ html {
 }
 
 body {
-    margin: 0
+    margin: 0;
+}
+
+body > .container {
+    display: block;
+    padding-top: 60px;
 }
 
 article,
@@ -150,7 +155,6 @@ input,
 optgroup,
 select,
 textarea {
-    color: inherit;
     font: inherit;
     margin: 0
 }
