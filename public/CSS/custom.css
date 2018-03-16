@@ -6,8 +6,9 @@ html {
     /* Margin bottom by footer height */
     margin-bottom: 90px;
   }
-  body > .container {
+  mh-navigation + .container {
     padding-top: 60px;
+    padding-bottom: 60px;
   }
   .padded {
     padding-top: 30px
