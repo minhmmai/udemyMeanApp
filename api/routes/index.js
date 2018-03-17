@@ -20,12 +20,12 @@ router
 router
     .route("/hotels/:hotelId/reviews")
     .get(ctrlReviews.reviewsGetAll)
-    .post(ctrlReviews.reviewsAddOne);
+    .post(ctrlUsers.authenticate, ctrlReviews.reviewsAddOne);
 
 router
     .route("/hotels/:hotelId/reviews/:reviewId")
     .get(ctrlReviews.reviewsGetOne)
-    .put(ctrlReviews.reviewsUpdateOne)
+    .put(ctrlUsers.authenticate, ctrlReviews.reviewsUpdateOne)
     .delete(ctrlReviews.reviewsDeleteOne);
 
 //Authentication routes

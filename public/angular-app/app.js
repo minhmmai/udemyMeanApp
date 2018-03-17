@@ -1,6 +1,7 @@
-angular.module("meanhotel", ["ngRoute"])
+angular.module("meanhotel", ["ngRoute", "angular-jwt"])
     .config(config).run(run);
 
+//config routes for pages and their controllers
 function config($httpProvider, $routeProvider) {
 
     $httpProvider.interceptors.push("AuthInterceptor");
@@ -15,7 +16,8 @@ function config($httpProvider, $routeProvider) {
         .when("/hotels", {
             templateUrl: "/angular-app/hotel-list/hotels.html",
             controller: HotelsController,
-            controllerAs: "vm",
+            controllerAs: "vm",            
+            //restrict access to certain page
             access: {
                 restricted: false
             }
@@ -38,19 +40,21 @@ function config($httpProvider, $routeProvider) {
         })
         .when("/profile", {
             templateUrl: "angular-app/profile/profile.html",
-            controllerAs: "vm",
+            //access to this page is retricted if user is not logged in
             access: {
                 restricted: true
             }
         })
+        //Redirect any wrong url to main page
         .otherwise({
             redirectTo: "/"
         });
 }
 
-function run ($rootScope, $location, $window, AuthFactory){
-    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute){
-        if(nextRoute.access !== undefined && nextRoute.access.restricted && !$window.sessionStorage.token && !AuthoFactory.isLoggedIn){
+//Listen to event of nextRoute and check whether it is a restricted route
+function run($rootScope, $location, $window, AuthFactory) {
+    $rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
+        if (nextRoute.access !== undefined && nextRoute.access.restricted && !$window.sessionStorage.token && !AuthFactory.isLoggedIn) {
             event.preventDefault();
             $location.path("/");
         }
