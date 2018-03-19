@@ -99,6 +99,7 @@ module.exports.reviewsGetOne = function (req, res) {
 var _addReview = function (req, res, hotel) {
     hotel.reviews.push({
         name: req.body.name,
+        username: req.body.username,
         rating: parseInt(req.body.rating, 10),
         review: req.body.review
     });
